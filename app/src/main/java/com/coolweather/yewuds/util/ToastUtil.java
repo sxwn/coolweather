@@ -5,4 +5,5 @@ package com.coolweather.yewuds.util;
  */
 
 public class ToastUtil {
+
 }
