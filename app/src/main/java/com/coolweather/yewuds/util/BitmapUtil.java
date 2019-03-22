@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class BitmapUtil {
 
+
     /**
      * 获取图片的旋转角度
      * @param filePath
