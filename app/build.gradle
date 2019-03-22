@@ -30,4 +30,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     //https://www.jianshu.com/p/2db31e518e9a  Android 时间轴的实现（RecyclerView更简单）
+    //https://blog.csdn.net/yrmao9893/article/details/70599061
 }
