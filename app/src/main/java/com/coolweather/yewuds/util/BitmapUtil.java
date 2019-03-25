@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.media.ExifInterface;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,8 +18,6 @@ import java.io.IOException;
  */
 
 public class BitmapUtil {
-
-
     /**
      * 获取图片的旋转角度
      * @param filePath
