@@ -110,7 +110,6 @@ public class BitmapUtil {
         }
         return outputFile.getPath();
     }
-
     public static Bitmap getSmallBitmap(String filePath) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;//只解析图片边沿，获取宽高
@@ -121,7 +120,6 @@ public class BitmapUtil {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(filePath, options);
     }
-
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {
         final int height = options.outHeight;
