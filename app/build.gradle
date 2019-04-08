@@ -31,4 +31,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     //https://www.jianshu.com/p/2db31e518e9a  Android 时间轴的实现（RecyclerView更简单）
     //https://blog.csdn.net/yrmao9893/article/details/70599061
+    compile 'org.litepal.android:core:1.3.2'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
