@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,6 @@ public class CustomDialog extends Dialog {
     private int height, width;
     private boolean cancelTouchout;
     private View view;
-    public volatile static CustomDialog customDialog;
-
 
     private CustomDialog(Builder builder) {
         super(builder.context);
@@ -63,18 +60,6 @@ public class CustomDialog extends Dialog {
         private boolean cancelTouchout;
         private View view;
         private int resStyle = -1;
-        private volatile static Builder builder;
-
-        public static Builder getInstance(Context context) {
-            if (builder == null) {
-                synchronized (Builder.class) {
-                    if (builder == null) {
-                        builder = new CustomDialog.Builder(context);
-                    }
-                }
-            }
-            return builder;
-        }
 
         public Builder(Context context) {
             this.context = context;
@@ -155,23 +140,14 @@ public class CustomDialog extends Dialog {
         }
 
         public CustomDialog build() {
-            return getParentInstance(context, this, resStyle);
-        }
-
-    }
-
-    public static CustomDialog getParentInstance(Context context, Builder builder, int resStyle) {
-        if (customDialog == null) {
-            synchronized (CustomDialog.class) {
-                if (customDialog == null) {
-                    if (resStyle != -1) {
-                        customDialog = new CustomDialog(builder, resStyle);
-                    } else {
-                        customDialog = new CustomDialog(builder);
-                    }
-                }
+            if (resStyle != -1) {
+                return new CustomDialog(this, resStyle);
+            } else {
+                return new CustomDialog(this);
             }
         }
-        return customDialog;
+
     }
+
+
 }

@@ -73,8 +73,8 @@ public class ChooseAreaFragment extends Fragment {
      * 当前选中的级别
      */
     private int currentLevel;
-
-    Dialog dialog = null;
+    private CustomDialog.Builder builder;
+    private Dialog dialog = null;
 
     @Nullable
     @Override
@@ -86,7 +86,9 @@ public class ChooseAreaFragment extends Fragment {
         goView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog = CustomDialog.Builder.getInstance(getActivity()).cancelTouchout(false)
+                if (builder == null)
+                    builder = new CustomDialog.Builder(getActivity());
+                dialog = builder.cancelTouchout(false)
                         .view(R.layout.dialog_sign_today_notice)
                         .setImageSize(R.id.sign_today_notice_topbg)
                         .setTextSize(R.id.sign_today_notice_sign)
