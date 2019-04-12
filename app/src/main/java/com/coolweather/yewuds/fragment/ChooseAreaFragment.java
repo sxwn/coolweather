@@ -140,6 +140,7 @@ public class ChooseAreaFragment extends Fragment {
                         activity.drawerLayout.closeDrawers();
                         activity.refreshLayout.setRefreshing(true);
                         activity.requestWeather(weatherId);
+
                     }
                 }
             }
