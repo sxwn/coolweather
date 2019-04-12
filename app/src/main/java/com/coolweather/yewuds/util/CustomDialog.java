@@ -19,6 +19,7 @@ public class CustomDialog extends Dialog {
     private boolean cancelTouchout;
     private View view;
 
+
     private CustomDialog(Builder builder) {
         super(builder.context);
         context = builder.context;
@@ -60,7 +61,18 @@ public class CustomDialog extends Dialog {
         private boolean cancelTouchout;
         private View view;
         private int resStyle = -1;
+        private volatile static Builder builder;
 
+        public static Builder getInstance(Context context) {
+            if (builder == null) {
+                synchronized (Builder.class) {
+                    if (builder == null) {
+                        builder = new CustomDialog.Builder(context);
+                    }
+                }
+            }
+            return builder;
+        }
 
         public Builder(Context context) {
             this.context = context;

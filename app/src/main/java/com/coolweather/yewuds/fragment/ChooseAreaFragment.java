@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,27 +86,25 @@ public class ChooseAreaFragment extends Fragment {
         goView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-                dialog =
-                        builder.cancelTouchout(false)
-                                .view(R.layout.dialog_sign_today_notice)
-                                .setImageSize(R.id.sign_today_notice_topbg)
-                                .setTextSize(R.id.sign_today_notice_sign)
-                                .style(R.style.Dialog)
-                                .addViewOnclick(R.id.sign_today_notice_cacel, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .addViewOnclick(R.id.sign_today_notice_sign, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Toast.makeText(getActivity(),"已签到",Toast.LENGTH_LONG).show();
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .build();
+                dialog = CustomDialog.Builder.getInstance(getActivity()).cancelTouchout(false)
+                        .view(R.layout.dialog_sign_today_notice)
+                        .setImageSize(R.id.sign_today_notice_topbg)
+                        .setTextSize(R.id.sign_today_notice_sign)
+                        .style(R.style.Dialog)
+                        .addViewOnclick(R.id.sign_today_notice_cacel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .addViewOnclick(R.id.sign_today_notice_sign, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getActivity(), "已签到", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                            }
+                        })
+                        .build();
                 dialog.show();
             }
         });
