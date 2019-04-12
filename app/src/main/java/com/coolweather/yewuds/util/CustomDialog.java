@@ -146,8 +146,6 @@ public class CustomDialog extends Dialog {
                 return new CustomDialog(this);
             }
         }
-
     }
-
 
 }
