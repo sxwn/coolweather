@@ -1,11 +1,13 @@
 package com.coolweather.yewuds;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity {
     private ImageView bingPicImg;
+    private SwipeRefreshLayout refreshLayout;
     private ScrollView weatherLayout;
     private TextView titleCity;
     private TextView titleUpdateTime;
@@ -144,9 +147,12 @@ public class WeatherActivity extends AppCompatActivity {
         weatherLayout.setVisibility(View.VISIBLE);
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initView() {
         prefs = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
         bingPicImg = findViewById(R.id.bing_pic_mg);
+        refreshLayout = findViewById(R.id.swipe_refresh);
+        refreshLayout.setColorSchemeColors(R.color.colorPrimary);
         weatherLayout = findViewById(R.id.weather_layout);
         titleCity = findViewById(R.id.title_city);
         titleUpdateTime = findViewById(R.id.title_update_time);
