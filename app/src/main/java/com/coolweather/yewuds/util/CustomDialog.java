@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class CustomDialog extends Dialog {
     private int height, width;
     private boolean cancelTouchout;
     private View view;
+    public volatile static CustomDialog customDialog;
 
 
     private CustomDialog(Builder builder) {
@@ -152,15 +154,24 @@ public class CustomDialog extends Dialog {
             return this;
         }
 
-
         public CustomDialog build() {
-            if (resStyle != -1) {
-                return new CustomDialog(this, resStyle);
-            } else {
-                return new CustomDialog(this);
-            }
+            return getParentInstance(context, this, resStyle);
         }
 
+    }
 
+    public static CustomDialog getParentInstance(Context context, Builder builder, int resStyle) {
+        if (customDialog == null) {
+            synchronized (CustomDialog.class) {
+                if (customDialog == null) {
+                    if (resStyle != -1) {
+                        customDialog = new CustomDialog(builder, resStyle);
+                    } else {
+                        customDialog = new CustomDialog(builder);
+                    }
+                }
+            }
+        }
+        return customDialog;
     }
 }
