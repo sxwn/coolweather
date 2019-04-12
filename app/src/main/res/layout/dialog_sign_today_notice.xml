@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/sign_today_notice_topbg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/sign_today_notice"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/sign_today_notice_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_marginTop="-80dp"
+        android:text="签到"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_home_sign"
+        android:textColor="#0c903b"/>
+
+    <ImageView
+        android:id="@+id/sign_today_notice_cacel"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:background="@mipmap/dialog_cacel" />
+
+
+</LinearLayout>
