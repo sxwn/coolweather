@@ -7,11 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -23,14 +26,16 @@ import com.coolweather.yewuds.gson.Forecast;
 import com.coolweather.yewuds.gson.Weather;
 import com.coolweather.yewuds.util.HttpUtil;
 import com.coolweather.yewuds.util.Utility;
+
 import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView bingPicImg;
-    private SwipeRefreshLayout refreshLayout;
+    public SwipeRefreshLayout refreshLayout;
     private ScrollView weatherLayout;
     private TextView titleCity;
     private TextView titleUpdateTime;
@@ -78,10 +83,10 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    private void requestWeather(final String weatherId) {
+    public void requestWeather(final String weatherId) {
 //        String weatherUrl = "http://guolin.tech/api/weather?cityId=" + weatherId + "&key=98052e2e825b4ccc9ab02730628d2d23";
-        String weatherUrl = "https://free-api.heweather.net/s6/weather/forecast?location="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9";
-        Log.d("weip","weatherUrl:"+weatherUrl);
+        String weatherUrl = "https://free-api.heweather.net/s6/weather/forecast?location=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
+        Log.d("weip", "weatherUrl:" + weatherUrl);
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -90,7 +95,6 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
-                        refreshLayout.setRefreshing(false);
                     }
                 });
             }
@@ -99,6 +103,7 @@ public class WeatherActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final Weather weather = Utility.handleWeatherResponse(responseText);
+                loadBingPic();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -107,7 +112,7 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
-                        }else{
+                        } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
                         refreshLayout.setRefreshing(false);
@@ -116,7 +121,6 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
         loadBingPic();
-
     }
 
     /**
@@ -162,6 +166,8 @@ public class WeatherActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     private void initView() {
         bingPicImg = findViewById(R.id.bing_pic_mg);
+        navButton = findViewById(R.id.nav_button);
+        navButton.setOnClickListener(this);
         refreshLayout = findViewById(R.id.swipe_refresh);
         refreshLayout.setColorSchemeColors(R.color.colorPrimary);
         weatherLayout = findViewById(R.id.weather_layout);
@@ -175,7 +181,7 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText = findViewById(R.id.comfort_text);
         carWashText = findViewById(R.id.car_wash_text);
         sportText = findViewById(R.id.sport_text);
-//        String bing_pic = prefs.getString("bing_pic", null);
+        drawerLayout = findViewById(R.id.drawer_layout);
 //        if (bing_pic != null){
 //            Log.d("weip","address:"+bing_pic);
 //            Glide.with(this).load(bing_pic).into(bingPicImg);
@@ -198,9 +204,9 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String bingPic = response.body().string();
-                Log.d("weip","address:"+bingPic);
+                Log.d("weip", "address:" + bingPic);
                 SharedPreferences.Editor edit = prefs.edit();
-                edit.putString("bing_pic",bingPic);
+                edit.putString("bing_pic", bingPic);
                 edit.apply();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -210,5 +216,14 @@ public class WeatherActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.nav_button:
+                drawerLayout.openDrawer(GravityCompat.START);
+                break;
+        }
     }
 }
