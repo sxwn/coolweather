@@ -48,11 +48,13 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     private TextView carWashText;
     private TextView sportText;
     private SharedPreferences prefs;
+    public DrawerLayout drawerLayout;
+    private Button navButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT>=21){
+        if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             //活动的布局会显示在状态栏上面
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -95,6 +97,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
+                        refreshLayout.setRefreshing(false);
                     }
                 });
             }
@@ -103,7 +106,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final Weather weather = Utility.handleWeatherResponse(responseText);
-                loadBingPic();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -186,7 +188,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 //            Log.d("weip","address:"+bing_pic);
 //            Glide.with(this).load(bing_pic).into(bingPicImg);
 //        }else{
-            loadBingPic();
+        loadBingPic();
 //        }
     }
 
